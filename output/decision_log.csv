@@ -1,0 +1,10 @@
+table,issue,decision,reason
+patients,exact duplicate rows,"Dropped exact duplicates, keeping the first occurrence.",Eliminates redundant entries to maintain a unique patient grain.
+patients,gender spellings that are not a code,Mapped variations like 'female' or 'woman' to standard codes and unknown entries to missing.,"Standardizes categorical values into official F, M, X codes."
+patients,site codes needing normalization,Uppercased and stripped all spaces and hyphens.,Ensures uniform site identifiers across files.
+patients,birth_year sentinel 9999,Converted 9999 to missing (NaN) with Int64 type.,Removes unrecorded sentinel values so they do not skew numeric summaries.
+visits,weight column named wt_kg in visits_south.csv,Renamed wt_kg to weight_kg prior to stacking.,Harmonizes column schemas between north and south clinic export files.
+visits,sbp sentinel 999 and readings outside 70 through 250,Coerced invalid measurements and 999 sentinels to missing.,Prevents erroneous or placeholder blood pressure readings from distorting analyses.
+visits,impossible and loosely written visit dates,Coerced non-calendar or improperly formatted date text to missing.,Enforces strict calendar date validation.
+visits,repeated patient_id and visit pairs,Kept the later reading ordered by visit_time for duplicate patient-visit pairs.,Resolves clinic rechecks by retaining the final recorded measurement.
+sites,repeated site_code rows,Filtered to keep only current active site records.,Removes retired records to maintain a clean site directory.
